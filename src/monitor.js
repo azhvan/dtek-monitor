@@ -108,17 +108,17 @@ function generateMessage(info) {
   const { updateTimestamp } = info || {}
 
   const reason = capitalize(sub_type)
-  const begin = start_date.split(" ")[0]
-  const end = end_date.split(" ")[0]
+  //const begin = start_date.split(" ")[0]
+  //const end = end_date.split(" ")[0]
 
   return [
-    "⚡️ <b>Зафіксовано відключення:</b>",
-    `🪫 <code>${begin} — ${end}</code>`,
+    "⚡️ <b>За адресою ${STREET}, ${HOUSE} зафіксовано відключення:</b>",
+    `🪫 Час початку - ${start_date}`,
+    `🔌 Орієнтовний час відновлення - ${end_date}`,
     "",
     `⚠️ <i>${reason}.</i>`,
     "\n",
-    `🔄 <i>${updateTimestamp}</i>`,
-    `💬 <i>${getCurrentTime()}</i>`,
+    `🔄 <i>Дата оновлення інформації – ${updateTimestamp}</i>`
   ].join("\n")
 }
 
