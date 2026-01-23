@@ -49,7 +49,7 @@ jobs:
             else
               git commit -m "chore: update artifacts"
             fi
-            git push origin main --force-with-lease
+            git push origin own_settings --force-with-lease
           else
             echo "No changes to commit"
           fi
