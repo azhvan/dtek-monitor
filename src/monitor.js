@@ -68,7 +68,7 @@ function checkIsOutage(info) {
   console.log("🌀 Checking power outage...")
 
   if (!info?.data) {
-    throw Error("❌ Power outage info missed.")
+    throw Error("❌ 1. Power outage info missed.")
   }
 
   const { sub_type, start_date, end_date, type } = info?.data?.[HOUSE] || {}
@@ -86,7 +86,7 @@ function checkIsScheduled(info) {
   console.log("🌀 Checking whether power outage scheduled...")
 
   if (!info?.data) {
-    throw Error("❌ Power outage info missed.")
+    throw Error("❌ 2. Power outage info missed.")
   }
 
   const { sub_type } = info?.data?.[HOUSE] || {}
@@ -159,6 +159,7 @@ async function sendNotification(message) {
 
 async function run() {
   const info = await getInfo()
+  console.log(info)
   const isOutage = checkIsOutage(info)
   const isScheduled = checkIsScheduled(info)
   if (isOutage && !isScheduled) {
