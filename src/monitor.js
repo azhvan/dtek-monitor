@@ -3,7 +3,6 @@ import { chromium } from "playwright"
 import {
   TELEGRAM_BOT_TOKEN,
   TELEGRAM_CHAT_ID,
-  CITY,
   STREET,
   HOUSE,
   SHUTDOWNS_PAGE,
@@ -35,15 +34,13 @@ async function getInfo() {
     const csrfToken = await csrfTokenTag.getAttribute("content")
 
     const info = await browserPage.evaluate(
-      async ({ CITY, STREET, csrfToken }) => {
+      async ({ STREET, csrfToken }) => {
         const formData = new URLSearchParams()
         formData.append("method", "getHomeNum")
-        formData.append("data[0][name]", "city")
-        formData.append("data[0][value]", CITY)
-        formData.append("data[1][name]", "street")
-        formData.append("data[1][value]", STREET)
-        formData.append("data[2][name]", "updateFact")
-        formData.append("data[2][value]", new Date().toLocaleString("uk-UA"))
+        formData.append("data[0][name]", "street")
+        formData.append("data[0][value]", STREET)
+        formData.append("data[1][name]", "updateFact")
+        formData.append("data[1][value]", new Date().toLocaleString("uk-UA"))
 
         const response = await fetch("/ua/ajax", {
           method: "POST",
@@ -55,7 +52,7 @@ async function getInfo() {
         })
         return await response.json()
       },
-      { CITY, STREET, csrfToken }
+      { STREET, csrfToken }
     )
 
     console.log("✅ Getting info finished.")
@@ -111,17 +108,17 @@ function generateMessage(info) {
   const { updateTimestamp } = info || {}
 
   const reason = capitalize(sub_type)
-  const begin = start_date.split(" ")[0]
-  const end = end_date.split(" ")[0]
+  //const begin = start_date.split(" ")[0]
+  //const end = end_date.split(" ")[0]
 
   return [
     "⚡️ <b>Зафіксовано відключення:</b>",
-    `🪫 <code>${begin} — ${end}</code>`,
+    `🪫 Час початку - ${start_date}`,
+    `🔌 Орієнтовний час відновлення - ${end_date}`,
     "",
     `⚠️ <i>${reason}.</i>`,
     "\n",
-    `🔄 <i>${updateTimestamp}</i>`,
-    `💬 <i>${getCurrentTime()}</i>`,
+    `🔄 <i>Дата оновлення інформації – ${updateTimestamp}</i>`
   ].join("\n")
 }
 
