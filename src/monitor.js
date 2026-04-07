@@ -112,7 +112,7 @@ function generateMessage(info) {
   //const end = end_date.split(" ")[0]
 
   return [
-    "⚡️ <b>Зафіксовано відключення:</b>",
+    "⚡️ <b>На сайті ДТЕК є інформація про відключення:</b>",
     `🪫 Час початку - ${start_date}`,
     `🔌 Орієнтовний час відновлення - ${end_date}`,
     "",
@@ -160,6 +160,7 @@ async function sendNotification(message) {
 async function run() {
   const info = await getInfo()
   const isOutage = checkIsOutage(info)
+  if (!isOutage) return
   const isScheduled = checkIsScheduled(info)
   if (isOutage && !isScheduled) {
     const message = generateMessage(info)
